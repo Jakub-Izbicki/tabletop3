@@ -16,7 +16,8 @@ module.exports = {
     "no-debugger": process.env.NODE_ENV === "production" ? "warn" : "off",
     "@typescript-eslint/ban-ts-ignore": "off",
     quotes: "off",
-    semi: "off"
+    semi: "off",
+    "space-before-function-paren": "off"
   },
   overrides: [
     {
