@@ -44,7 +44,7 @@ export default class SceneEmpty1 extends Vue {
 
     sceneWindow.appendChild(renderer.domElement);
 
-    const geometry = new THREE.BoxGeometry(5, 20, 1);
+    const geometry = new THREE.BoxGeometry(6.3, 8.8, 0.1);
     const material = new THREE.MeshPhongMaterial({ color: 0x00ff00 });
     const cube = new THREE.Mesh(geometry, material);
     cube.castShadow = true;
@@ -68,14 +68,14 @@ export default class SceneEmpty1 extends Vue {
 
     scene.add(new THREE.AmbientLight(0x666666));
 
-    const light = new THREE.DirectionalLight(0xdfebff, 1);
+    const light = new THREE.DirectionalLight(0xffffff, 1);
     // light.position.set(0, 200, -100);
-    light.position.set(0, 200, 0);
+    light.position.set(0, 100, 0);
     light.position.multiplyScalar(1.3);
     light.castShadow = true;
     light.shadow.mapSize.width = 1024;
     light.shadow.mapSize.height = 1024;
-    const d = 300;
+    const d = 30;
     light.shadow.camera.left = -d;
     light.shadow.camera.right = d;
     light.shadow.camera.top = d;
@@ -86,7 +86,7 @@ export default class SceneEmpty1 extends Vue {
     const groundMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(20000, 20000),
       new THREE.MeshStandardMaterial({
-        color: 0x55550f,
+        color: 0xa8a8a8,
         flatShading: true
       })
     );
