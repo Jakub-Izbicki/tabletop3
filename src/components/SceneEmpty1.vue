@@ -68,6 +68,8 @@ export default class SceneEmpty1 extends Vue {
     css3dRenderer.setSize(width, height);
     css3dRenderer.domElement.style.position = "absolute";
     css3dRenderer.domElement.style.top = "0";
+    css3dRenderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    css3dRenderer.shadowMap.enabled = true;
 
     sceneWindow.appendChild(css3dRenderer.domElement);
 
@@ -101,7 +103,8 @@ export default class SceneEmpty1 extends Vue {
     light.shadow.camera.top = d;
     light.shadow.camera.bottom = -d;
     light.shadow.camera.far = 1000;
-    scene.add(light);
+    // scene.add(light);
+    this.css3dScene.add(light);
 
     const groundMesh = new THREE.Mesh(
       new THREE.PlaneBufferGeometry(20000, 20000),
@@ -112,7 +115,7 @@ export default class SceneEmpty1 extends Vue {
     );
     groundMesh.receiveShadow = true;
     groundMesh.rotateX(-Math.PI / 2);
-    scene.add(groundMesh);
+    // scene.add(groundMesh);
 
     const lineBasicMaterial = new THREE.LineBasicMaterial({ color: 0x00ffff });
     const points = [
@@ -140,7 +143,29 @@ export default class SceneEmpty1 extends Vue {
     textElement.position.y = 10;
     textElement.position.z = 0;
     textElement.rotation.x = -Math.PI / 2;
+    textElement.castShadow = true;
+    textElement.receiveShadow = true;
     this.css3dScene.add(textElement);
+
+    const element2 = document.createElement("div");
+    element2.style.width = "100px";
+    element2.style.height = "100px";
+    // element.style.opacity = "0.5";
+    element2.style.background = new THREE.Color(
+      Math.random() * 0.21568627451 + 0.462745098039,
+      Math.random() * 0.21568627451 + 0.462745098039,
+      Math.random() * 0.21568627451 + 0.462745098039
+    ).getStyle();
+    element2.textContent = "I am editable text!";
+    element2.setAttribute("contenteditable", "");
+    const textElement2 = new CSS3DObject(element2);
+    textElement2.position.x = 15;
+    textElement2.position.y = 30;
+    textElement2.position.z = 15;
+    textElement2.rotation.x = -Math.PI / 2;
+    textElement2.castShadow = true;
+    textElement2.receiveShadow = true;
+    this.css3dScene.add(textElement2);
 
     const geometry = new THREE.PlaneBufferGeometry(100, 100);
     const material = new THREE.MeshBasicMaterial({
@@ -158,7 +183,7 @@ export default class SceneEmpty1 extends Vue {
     cube.position.copy(textElement.position);
     cube.rotation.copy(textElement.rotation);
     this.cube = cube;
-    scene.add(cube);
+    // scene.add(cube);
   }
 
   animate() {
