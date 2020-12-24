@@ -20,6 +20,7 @@ import {
   CSS3DObject,
   CSS3DRenderer
 } from "three/examples/jsm/renderers/CSS3DRenderer";
+import Stats from "three/examples/jsm/libs/stats.module";
 
 export default class SceneEmpty1 extends Vue {
   private renderer!: WebGLRenderer;
@@ -33,6 +34,8 @@ export default class SceneEmpty1 extends Vue {
   private css3dScene!: Scene;
 
   private controls!: OrbitControls;
+
+  private stats!: Stats;
 
   mounted() {
     this.setUpRenderer();
@@ -77,7 +80,7 @@ export default class SceneEmpty1 extends Vue {
     const controls = new OrbitControls(camera, this.renderer.domElement);
     // const controls = new OrbitControls(camera, this.css3dRenderer.domElement);
     controls.screenSpacePanning = false;
-    controls.maxDistance = 500;
+    controls.maxDistance = 2000;
     controls.minDistance = 10;
     controls.maxPolarAngle = Math.PI / 2;
     this.controls = controls;
@@ -125,22 +128,28 @@ export default class SceneEmpty1 extends Vue {
     const linesGeometry = new THREE.BufferGeometry().setFromPoints(points);
     scene.add(new THREE.Line(linesGeometry, lineBasicMaterial));
 
+    // @ts-ignore
+    this.stats = new Stats();
+    this.stats.showPanel(0);
+    sceneWindow.appendChild(this.stats.dom);
+
     const side = 10;
 
     [...new Array(side).keys()].forEach(i => {
       [...new Array(side).keys()].forEach(j => {
         this.createTextPlane((i * 110) - ((side * 110) / 2), 10, (j * 110) - ((side * 110) / 2));
-      }
-      );
-    }
-    );
+      });
+    });
   }
 
   animate() {
     requestAnimationFrame(this.animate);
+
+    this.stats.begin();
     // this.controls.update();
     this.renderer.render(this.scene, this.camera);
     // this.css3dRenderer.render(this.css3dScene, this.camera);
+    this.stats.end();
   }
 
   createTextPlane(x: number, y: number, z: number) {
